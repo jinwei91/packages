@@ -5,13 +5,15 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=OpenBLAS
-PKG_VERSION:=0.3.19
-PKG_RELEASE:=$(AUTORELEASE)
+PKG_VERSION:=0.3.23
+PKG_RELEASE:=1
 
 PKG_SOURCE:=OpenBLAS-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://github.com/xianyi/OpenBLAS/releases/download/v$(PKG_VERSION)/
-PKG_HASH:=947f51bfe50c2a0749304fbe373e00e7637600b0a47b78a51382aeb30ca08562
-PKG_LICENSE:=BSD 3-Clause
+PKG_HASH:=5d9491d07168a5d00116cdc068a40022c3455bf9293c7cb86a65b1054d7e5114
+PKG_LICENSE:=BSD-3-Clause
+PKG_CPE_ID:=cpe:/a:openblas_project:openblas
+
 PKG_MAINTAINER:=Alexandru Ardelean <ardeleanalex@gmail.com>
 
 PKG_BUILD_PARALLEL:=1
@@ -26,8 +28,8 @@ define Package/openblas
   URL:=https://www.openblas.net/
   DEPENDS:= \
        @!arc \
-       @!armeb \
        @!powerpc \
+       @!SOFT_FLOAT \
        +INSTALL_GFORTRAN:libgfortran
 endef
 
@@ -64,6 +66,8 @@ else ifeq ($(ARCH),mipsel)
   OPENBLAS_TARGET:=MIPS24K
 else ifeq ($(ARCH),powerpc)
   OPENBLAS_TARGET:=PPC440
+else ifeq ($(ARCH),riscv64)
+  OPENBLAS_TARGET:=RISCV64_GENERIC
 endif
 endif # ifeq ($(OPENBLAS_TARGET),)
 
@@ -75,6 +79,8 @@ endif
 
 MAKE_FLAGS += \
 	CROSS=1 \
+	CC=$(TARGET_CC_NOCACHE) \
+	CXX=$(TARGET_CXX_NOCACHE) \
 	HOSTCC=$(HOSTCC_NOCACHE) \
 	CROSS_SUFFIX=$(TARGET_CROSS) \
 	BINARY=$(OPENBLAS_BINARY) \

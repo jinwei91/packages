@@ -9,11 +9,12 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=opensc
 PKG_VERSION:=0.22.0
-PKG_RELEASE:=$(AUTORELEASE)
+PKG_RELEASE:=2
 PKG_HASH:=8d4e5347195ebea332be585df61dcc470331c26969e4b0447c851fb0844c7186
 
 PKG_LICENSE:=LGPL-2.1-or-later
 PKG_LICENSE_FILES:=COPYING
+PKG_CPE_ID:=cpe:/a:opensc_project:opensc
 PKG_MAINTAINER:=Daniel Golle <daniel@makrotopia.org>
 PKG_SOURCE_URL:=https://github.com/OpenSC/OpenSC/releases/download/$(PKG_VERSION)/
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
@@ -99,7 +100,6 @@ endef
 endef
 
 CONFIGURE_ARGS += \
-	--disable-doc \
 	--disable-man \
 	--disable-notify \
 	--disable-strict

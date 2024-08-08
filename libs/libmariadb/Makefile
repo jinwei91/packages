@@ -8,8 +8,8 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=libmariadb
-PKG_VERSION:=3.1.12
-PKG_RELEASE:=$(AUTORELEASE)
+PKG_VERSION:=3.1.18
+PKG_RELEASE:=2
 
 PKG_SOURCE:=mariadb-connector-c-$(PKG_VERSION)-src.tar.gz
 PKG_SOURCE_URL := \
@@ -17,7 +17,7 @@ PKG_SOURCE_URL := \
 	https://mirror.lstn.net/mariadb/connector-c-$(PKG_VERSION) \
 	https://ftp.yz.yamagata-u.ac.jp/pub/dbms/mariadb/connector-c-$(PKG_VERSION) \
 	https://downloads.mariadb.org/interstitial/connector-c-$(PKG_VERSION)
-PKG_HASH:=2f5ae14708b4813e4ff6857d152c22e6fc0e551c9fa743c1ef81a68e3254fe63
+PKG_HASH:=b01ecacf7531c2f36d90708845488e66462bf63627c58cb5986bd1c0833e4d9c
 PKG_BUILD_DIR:=$(BUILD_DIR)/mariadb-connector-c-$(PKG_VERSION)-src
 
 PKG_MAINTAINER:=Michal Hrusecky <Michal@Hrusecky.net>
@@ -35,7 +35,8 @@ MARIADB_CLIENT_PLUGINS := \
 	auth_gssapi_client \
 	remote_io
 
-PKG_BUILD_DEPENDS:=curl
+PKG_BUILD_DEPENDS:=curl USE_MUSL:libucontext
+
 PKG_CONFIG_DEPENDS := \
 	$(patsubst %,CONFIG_PACKAGE_$(PKG_NAME)-plugin-%,$(subst _,-,$(MARIADB_CLIENT_PLUGINS)))
 

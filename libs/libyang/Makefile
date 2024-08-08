@@ -9,7 +9,7 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=libyang
 PKG_VERSION:=2.0.112
-PKG_RELEASE:=$(AUTORELEASE)
+PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://codeload.github.com/CESNET/libyang/tar.gz/v$(PKG_VERSION)?
@@ -18,6 +18,7 @@ PKG_HASH:=184dd67c66c1ad968a2ee4d0950fb6b103834917b04b17af9c7bca80967636ee
 PKG_MAINTAINER:=Jakov Smolic <jakov.smolic@sartura.hr>
 PKG_LICENSE:=BSD-3-Clause
 PKG_LICENSE_FILES:=LICENSE
+PKG_CPE_ID:=cpe:/a:cesnet:libyang
 
 CMAKE_INSTALL:=1
 CMAKE_BINARY_SUBDIR:=build

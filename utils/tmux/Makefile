@@ -3,7 +3,7 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=tmux
 PKG_VERSION:=3.3a
-PKG_RELEASE:=$(AUTORELEASE)
+PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://codeload.github.com/tmux/tmux/tar.gz/$(PKG_VERSION)?
@@ -12,7 +12,7 @@ PKG_MAINTAINER:=Maxim Storchak <m.storchak@gmail.com>
 
 PKG_LICENSE:=ISC
 PKG_LICENSE_FILES:=COPYING
-PKG_CPE_ID:=cpe:/a:nicholas_marriott:tmux
+PKG_CPE_ID:=cpe:/a:tmux_project:tmux
 
 PKG_BUILD_PARALLEL:=1
 PKG_INSTALL:=1

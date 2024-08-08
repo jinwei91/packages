@@ -9,12 +9,12 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=ffmpeg
-PKG_VERSION:=5.1
+PKG_VERSION:=5.1.3
 PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.xz
 PKG_SOURCE_URL:=https://ffmpeg.org/releases/
-PKG_HASH:=55eb6aab5ee235550fa54a33eaf8bf1b4ec66c01453182b12f6a993d75698b03
+PKG_HASH:=1b113593ff907293be7aed95acdda5e785dd73616d7d4ec90a0f6adbc5a0312e
 PKG_MAINTAINER:=Ted Hess <thess@kitschensync.net>, \
 		Ian Leonard <antonlacon@gmail.com>
 
@@ -69,6 +69,7 @@ FFMPEG_CUSTOM_DECODERS:= \
 
 FFMPEG_CUSTOM_MUXERS:= \
 	ac3 \
+	avi \
 	ffm \
 	h264 \
 	hevc \
@@ -333,6 +334,7 @@ define Package/libffmpeg-audio-dec
 $(call Package/libffmpeg/Default)
  TITLE+= (audio)
  VARIANT:=audio-dec
+ CONFLICTS:=libffmpeg-full
 endef
 
 define Package/libffmpeg-audio-dec/description
@@ -345,12 +347,13 @@ endef
 define Package/libffmpeg-full
 $(call Package/libffmpeg/Default)
  TITLE+= (full)
- DEPENDS+= +alsa-lib +libatomic +libopenssl +libopus \
+ DEPENDS+= +alsa-lib +libgnutls +PACKAGE_libopus:libopus \
     +SOFT_FLOAT:shine \
     +!SOFT_FLOAT:lame-lib \
     +PACKAGE_libx264:libx264 \
     +!PACKAGE_libx264:fdk-aac
  VARIANT:=full
+ PROVIDES+=libffmpeg-mini libffmpeg-audio-dec
 endef
 
 
@@ -365,6 +368,7 @@ define Package/libffmpeg-mini
 $(call Package/libffmpeg/Default)
  TITLE+= (mini)
  VARIANT:=mini
+ CONFLICTS:=libffmpeg-full
 endef
 
 define Package/libffmpeg-mini/description
@@ -393,7 +397,6 @@ FFMPEG_CONFIGURE:= \
 	--enable-shared \
 	--enable-static \
 	--enable-pthreads \
-	--enable-protocol=rtmp,rtmps \
 	--enable-zlib \
 	--disable-doc \
 	--disable-debug \
@@ -466,8 +469,7 @@ ifeq ($(BUILD_VARIANT),full)
 	)
 
 	FFMPEG_CONFIGURE+= \
-		--enable-nonfree \
-		--enable-openssl \
+		--enable-gnutls \
 		$(if $(CONFIG_BUILD_PATENTED),, \
 			$(call FFMPEG_DISABLE,decoder,$(FFMPEG_PATENTED_DECODERS)) \
 			$(call FFMPEG_DISABLE,muxer,$(FFMPEG_PATENTED_MUXERS)) \

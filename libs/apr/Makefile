@@ -9,7 +9,7 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=apr
 PKG_VERSION:=1.7.0
-PKG_RELEASE:=3
+PKG_RELEASE:=4
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.bz2
 PKG_SOURCE_URL:=@APACHE/apr/
@@ -20,7 +20,7 @@ PKG_MAINTAINER:=Thomas Heil <heil@terminal-consulting.de>
 PKG_LICENSE:=Apache-2.0
 PKG_LICENSE_FILES:=LICENSE
 
-PKG_CPE_ID:=cpe:/a:apache:apr
+PKG_CPE_ID:=cpe:/a:apache:portable_runtime
 
 PKG_BUILD_PARALLEL:=1
 

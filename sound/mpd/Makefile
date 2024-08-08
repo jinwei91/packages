@@ -6,12 +6,12 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=mpd
-PKG_VERSION:=0.23.9
-PKG_RELEASE:=$(AUTORELEASE)
+PKG_VERSION:=0.23.13
+PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.xz
 PKG_SOURCE_URL:=https://www.musicpd.org/download/mpd/0.23
-PKG_HASH:=2becaba980402e8dc7972ccc3476e493b7ae2eeb720d31fa6712472ed48e9f2d
+PKG_HASH:=a96b01e6fbbb7e8ab25eb7c15d5c811c62eb19b76d143a802f51674791f1d519
 
 PKG_MAINTAINER:=
 PKG_LICENSE:=GPL-2.0-or-later
@@ -22,7 +22,7 @@ PKG_CONFIG_DEPENDS:= \
 	CONFIG_BUILD_PATENTED \
 	CONFIG_IPV6 \
 
-PKG_USE_MIPS16:=0
+PKG_BUILD_FLAGS:=no-mips16 no-lto
 
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/nls.mk
@@ -48,7 +48,7 @@ endef
 define Package/mpd-full
 $(call Package/mpd/Default)
   TITLE+= (full)
-  DEPENDS+= +AUDIO_SUPPORT:pulseaudio-daemon +libvorbis +libmms +libnpupnp +libshout +yajl \
+  DEPENDS+= +AUDIO_SUPPORT:pulseaudio +libvorbis +libmms +libnpupnp +libshout +yajl \
             +libffmpeg +lame-lib +libsoxr +!BUILD_PATENTED:libmad
   PROVIDES:=mpd
   VARIANT:=full

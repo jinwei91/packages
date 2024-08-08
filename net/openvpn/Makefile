@@ -9,20 +9,21 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=openvpn
 
-PKG_VERSION:=2.5.7
-PKG_RELEASE:=1
+PKG_VERSION:=2.5.8
+PKG_RELEASE:=5
 
 PKG_SOURCE_URL:=\
 	https://build.openvpn.net/downloads/releases/ \
 	https://swupdate.openvpn.net/community/releases/
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.xz
-PKG_HASH:=313bca7e996a4f59ef9940dd87c6c4b9168064db9be6cabebd37cd65f13759ed
+PKG_HASH:=2bbd0026469902037ee6499b68283d5ab36c74e36cae3112082cfdf6c77a0c57
 
 PKG_MAINTAINER:=Magnus Kroken <mkroken@gmail.com>
 
 PKG_INSTALL:=1
 PKG_FIXUP:=autoreconf
 PKG_BUILD_PARALLEL:=1
+PKG_BUILD_FLAGS:=gc-sections
 PKG_LICENSE:=GPL-2.0
 PKG_CPE_ID:=cpe:/a:openvpn:openvpn
 
@@ -66,9 +67,6 @@ CONFIGURE_VARS += \
 	IPROUTE=/sbin/ip \
 	NETSTAT=/sbin/netstat
 
-TARGET_CFLAGS += -ffunction-sections -fdata-sections
-TARGET_LDFLAGS += -Wl,--gc-sections
-
 define Build/Configure
 	$(call Build/Configure/Default, \
 		$(if $(CONFIG_OPENVPN_$(BUILD_VARIANT)_ENABLE_SMALL),--enable-small) \
@@ -87,7 +85,7 @@ define Build/Configure
 		$(if $(CONFIG_OPENVPN_$(BUILD_VARIANT)_ENABLE_DEF_AUTH),--enable,--disable)-def-auth \
 		$(if $(CONFIG_OPENVPN_$(BUILD_VARIANT)_ENABLE_PF),--enable,--disable)-pf \
 		$(if $(CONFIG_OPENVPN_$(BUILD_VARIANT)_ENABLE_PORT_SHARE),--enable,--disable)-port-share \
-		$(if $(CONFIG_OPENVPN_OPENSSL),--with-crypto-library=openssl) \
+		$(if $(CONFIG_OPENVPN_OPENSSL),--with-crypto-library=openssl --with-openssl-engine=no) \
 		$(if $(CONFIG_OPENVPN_MBEDTLS),--with-crypto-library=mbedtls) \
 		$(if $(CONFIG_OPENVPN_WOLFSSL),--with-crypto-library=wolfssl) \
 	)

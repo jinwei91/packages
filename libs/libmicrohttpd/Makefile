@@ -9,7 +9,7 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=libmicrohttpd
 PKG_VERSION:=0.9.75
-PKG_RELEASE:=$(AUTORELEASE)
+PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=@GNU/libmicrohttpd
@@ -18,6 +18,7 @@ PKG_HASH:=9278907a6f571b391aab9644fd646a5108ed97311ec66f6359cebbedb0a4e3bb
 PKG_MAINTAINER:=Alexander Couzens <lynxis@fe80.eu>
 PKG_LICENSE:=LGPL-2.1-or-later
 PKG_LICENSE_FILES:=COPYING
+PKG_CPE_ID:=cpe:/a:gnu:libmicrohttpd
 
 PKG_INSTALL:=1
 PKG_BUILD_PARALLEL:=1

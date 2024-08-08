@@ -8,25 +8,25 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=modemmanager
-PKG_SOURCE_VERSION:=1.18.8
-PKG_RELEASE:=$(AUTORELEASE)
+PKG_SOURCE_VERSION:=1.20.6
+PKG_RELEASE:=12
 
 PKG_SOURCE_PROTO:=git
 PKG_SOURCE_URL:=https://gitlab.freedesktop.org/mobile-broadband/ModemManager.git
-PKG_MIRROR_HASH:=a9347149ade61f3b4befd9cda105b0d997079d11fd228177c2a4a5557f3166ec
+PKG_MIRROR_HASH:=e90103e2e42bb826bbbac83937a9a69f50348cd6ce0d8da655a12b65494ce7c9
 
 PKG_MAINTAINER:=Nicholas Smith <nicholas@nbembedded.com>
 PKG_LICENSE:=GPL-2.0-or-later
 PKG_LICENSE_FILES:=COPYING
 
 PKG_BUILD_DEPENDS:=glib2/host libxslt/host
+PKG_BUILD_FLAGS:=gc-sections
 
 include $(INCLUDE_DIR)/package.mk
 include $(INCLUDE_DIR)/nls.mk
 include $(INCLUDE_DIR)/meson.mk
 
-TARGET_CFLAGS += -ffunction-sections -fdata-sections -fno-merge-all-constants -fmerge-constants
-TARGET_LDFLAGS += -Wl,--gc-sections
+TARGET_CFLAGS += -fno-merge-all-constants -fmerge-constants
 
 define Package/modemmanager/config
   source "$(SOURCE)/Config.in"
@@ -56,6 +56,7 @@ endef
 MESON_ARGS += \
 	-Dudev=false \
 	-Dudevdir=/lib/udev \
+	-Dtests=false \
 	-Dsystemdsystemunitdir=no \
 	-Dsystemd_suspend_resume=false \
 	-Dsystemd_journal=false \
@@ -79,6 +80,8 @@ define Build/InstallDev
 	$(INSTALL_DIR) $(1)/usr/lib/pkgconfig
 	$(CP) $(PKG_INSTALL_DIR)/usr/lib/pkgconfig/ModemManager.pc $(1)/usr/lib/pkgconfig
 	$(CP) $(PKG_INSTALL_DIR)/usr/lib/pkgconfig/mm-glib.pc $(1)/usr/lib/pkgconfig
+	$(INSTALL_DIR) $(1)/usr/share/dbus-1/interfaces
+	$(CP) $(PKG_BUILD_DIR)/introspection/org.freedesktop.ModemManager1.* $(1)/usr/share/dbus-1/interfaces
 endef
 
 define Package/modemmanager/install

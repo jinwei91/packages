@@ -8,15 +8,15 @@
 include $(TOPDIR)/rules.mk
 
 PKG_NAME:=owntone
-PKG_VERSION:=28.4
+PKG_VERSION:=28.5
 PKG_RELEASE:=1
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.xz
 PKG_SOURCE_URL:=https://github.com/owntone/owntone-server/releases/download/$(PKG_VERSION)/
-PKG_HASH:=6b3dcfe0c51aa6424a0a0c695b2f0350302dfde3351e19961224847076889c92
+PKG_HASH:=c9ee0152dc488f782a25a68e72d24c109882bef3dd2914315fe499c8415fd898
 
 PKG_FIXUP:=autoreconf
-PKG_USE_MIPS16:=0
+PKG_BUILD_FLAGS:=no-mips16
 PKG_INSTALL:=1
 
 PKG_MAINTAINER:=Espen Jürgensen <espenjurgensen+openwrt@gmail.com>
@@ -58,7 +58,6 @@ CONFIGURE_ARGS += \
 	--without-libevent_pthreads
 
 TARGET_CFLAGS += $(FPIC)
-TARGET_LDFLAGS += -Wl,-rpath-link,$(STAGING_DIR)/usr/lib
 
 define Package/owntone/install
 	$(INSTALL_DIR) $(1)/usr/sbin

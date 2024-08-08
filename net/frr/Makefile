@@ -7,22 +7,22 @@
 
 include $(TOPDIR)/rules.mk
 PKG_NAME:=frr
-PKG_VERSION:=8.3.0
-PKG_RELEASE:=$(AUTORELEASE)
-PKG_SOURCE_DATE:=2022-07-27
+PKG_VERSION:=8.5.1
+PKG_RELEASE:=1
+PKG_SOURCE_DATE:=2023-05-12
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_SOURCE_DATE).tar.gz
-PKG_SOURCE_VERSION:=4a27375c965a7d9079b7aba1555df54df47f1ca4
+PKG_SOURCE_VERSION:=05469ab2b553302c2a7032f4c89e4510dc3fa6d9
 PKG_SOURCE_URL:=https://codeload.github.com/FRRouting/frr/tar.gz/$(PKG_SOURCE_VERSION)?
 
-
-PKG_HASH:=d09fd6517b955f37418f0d260d0cd5fda0b3f4fd416e3121f270ce3934cdf6ba
+PKG_HASH:=caf3fcf1998ecd9a08e67373921a2d4bf49dbfc707008d20a1d38fd1606ef298
 PKG_MAINTAINER:=Lucian Cristian <lucian.cristian@gmail.com>
 
 PKG_BUILD_DIR:=$(BUILD_DIR)/$(PKG_NAME)-$(PKG_SOURCE_VERSION)
 HOST_BUILD_DIR:=$(BUILD_DIR_HOST)/$(PKG_NAME)-$(PKG_SOURCE_VERSION)
 
 PKG_LICENSE:=GPL-2.0-only LGPL-2.1-only
+PKG_CPE_ID:=cpe:/a:ffrouting:ffrouting
 
 PKG_DAEMON_AVAILABLE:= \
 	babeld \
@@ -58,6 +58,7 @@ PKG_CONFIG_DEPENDS:= \
 PKG_FIXUP:=autoreconf
 PKG_BUILD_PARALLEL:=1
 PKG_INSTALL:=1
+PKG_BUILD_FLAGS:=lto
 
 PKG_BUILD_DEPENDS:=frr/host
 HOST_BUILD_DEPENDS:=python3/host
@@ -166,7 +167,6 @@ define Package/frr-libfrr/conffiles
 endef
 
 TARGET_LDFLAGS += -Wl,--gc-sections,--as-needed -latomic
-TARGET_CFLAGS += -flto
 
 define Host/Configure
 	$(Host/Configure/Default)

@@ -9,7 +9,7 @@ include $(TOPDIR)/rules.mk
 
 PKG_NAME:=acl
 PKG_VERSION:=2.3.1
-PKG_RELEASE:=$(AUTORELEASE)
+PKG_RELEASE:=2
 
 PKG_SOURCE:=$(PKG_NAME)-$(PKG_VERSION).tar.gz
 PKG_SOURCE_URL:=https://git.savannah.nongnu.org/cgit/acl.git/snapshot
@@ -18,6 +18,7 @@ PKG_MAINTAINER:=Maxim Storchak <m.storchak@gmail.com>
 
 PKG_LICENSE:=LGPL-2.1 GPL-2.0
 PKG_LICENSE_FILES:=doc/COPYING doc/COPYING.LGPL
+PKG_CPE_ID:=cpe:/a:acl_project:acl
 
 PKG_INSTALL:=1
 PKG_FIXUP:=autoreconf

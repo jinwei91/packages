@@ -25,7 +25,7 @@ define Package/nlbwmon
   SECTION:=net
   CATEGORY:=Network
   DEPENDS:=+libubox +libnl-tiny +zlib +kmod-nf-conntrack-netlink
-  TITLE:=LEDE Traffic Usage Monitor
+  TITLE:=OpenWrt Traffic Usage Monitor
 endef
 
 define Package/nlbwmon/install
@@ -38,9 +38,12 @@ define Package/nlbwmon/install
 	$(INSTALL_BIN) ./files/nlbwmon.init $(1)/etc/init.d/nlbwmon
 	$(INSTALL_DIR) $(1)/etc/config
 	$(INSTALL_CONF) ./files/nlbwmon.config $(1)/etc/config/nlbwmon
+	$(INSTALL_DIR) $(1)/etc/hotplug.d/iface
+	$(INSTALL_BIN) ./files/nlbwmon.hotplug $(1)/etc/hotplug.d/iface/30-nlbwmon
 endef
 
 define Package/nlbwmon/conffiles
+/etc/config/nlbwmon
 /usr/share/nlbwmon/protocols
 endef
 
